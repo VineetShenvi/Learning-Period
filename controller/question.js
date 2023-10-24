@@ -130,11 +130,22 @@ catch(e){
 }
 };
 
+const filterByCategory = async(req, res) => {
+    filteredQuestions = await Question.find({
+        category : req.body.category
+    });
+
+    filteredQuestions.forEach((question) => {
+        console.log(question.question);
+    });
+}
+
 module.exports ={
     newQuestion,
     showAllQuestions,
     updateQuestion,
     likeQuestion,
     dislikeQuestion,
-    deleteQuestion
+    deleteQuestion,
+    filterByCategory
 };
