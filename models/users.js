@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    mobileno:{
+    mobile:{
         type:Number,
         unique:true,
         required:true,
@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
                 throw new error("Invalid phone number")
             } 
         }
+    },
+    profilepic:{
+        type:String
     },
     questions:[{
         type : mongoose.Schema.Types.ObjectId,

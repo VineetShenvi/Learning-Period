@@ -5,7 +5,7 @@ config({
     path:"./config.env",
 })
 const morgan = require("morgan");
-const connectDB = require('./db/connect');
+const connectDB = require('./config/db');
 
 app.use(morgan('dev'))
 app.use(express.json())

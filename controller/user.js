@@ -3,13 +3,15 @@ const bcrypt = require("bcrypt")
 
 const User = require('../models/users')
 const sendMail = require('../utilities/mailer')
+const cloudinary = require("../config/cloudinary");
+
 
 const signup = async (req,res)=>{
     try{
         username = req.body.username
         password = req.body.password
         email = req.body.email
-        mobileno = req.body.mobileno
+        mobileno = req.body.mobile
         let DB_user = await User.findOne({ email });
         if (DB_user)
         return res.status(404).json({
@@ -25,7 +27,7 @@ const signup = async (req,res)=>{
             username : username,
             password : hashedPassword,
             email : email,
-            mobileno : mobileno,
+            mobile : mobileno,
         });
         const user1=await user.save()
         res.send("Successful sign-up!")
@@ -120,6 +122,27 @@ const followUser = async (req, res) => {
     }
 }
 
+const uploadProfilePic = async(req,res, next) => {
+    const file = req.file;
+    if(!file){
+        return res.status(400).send(" Please upload a file.")
+    }
+    try{
+        const result = await cloudinary.uploader.upload(file.path);
+        console.log(result);
+        await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $push : { profilepic : result.secure_url}
+            },
+        )
+    }
+    catch (err) {
+        console.log(err);
+    }
+    next();
+};
+
 const logout = (req, res) => {
     res.send("Logged out successfully");
 };
@@ -129,6 +152,7 @@ module.exports ={
     login,
     getProfile,
     updateUser,
-    logout,
-    followUser
+    followUser,
+    uploadProfilePic,
+    logout
 }
