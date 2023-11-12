@@ -12,6 +12,6 @@ router.get("/user/profile", authenticateJWT, getProfile);
 router.patch("/user/update", authenticateJWT, updateUser);
 router.get("/user/logout", authenticateJWT, logout);
 router.patch("/user/followUser", authenticateJWT, followUser);
-router.post("/user/profilepic", authenticateJWT, fileUpload.single("file"), uploadProfilePic);
+router.post("/user/profilepic", authenticateJWT, fileUpload.uploadCloudinary.single("file"), uploadProfilePic);
 
 module.exports = router

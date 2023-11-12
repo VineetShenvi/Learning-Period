@@ -1,11 +1,17 @@
 const multer = require("multer");
 
-const storage = multer.diskStorage({
+const storageServer = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(null, file.originalname + '-' + Date.now())
   },
   destination: (req, file, cb) => {
     cb(null, './uploads/')
+  }
+});
+
+const storageCloudinary = multer.diskStorage({
+  filename: (req, file, cb) => {
+    cb(null, file.originalname + '-' + Date.now())
   }
 });
 
@@ -22,10 +28,19 @@ const fileFilter = (req, file, cb) => {
   }
 }
 
-const upload = multer({
-  storage : storage,
+const uploadServer = multer({
+  storage : storageServer,
   limits: { fileSize: 25 * 1024 * 1024 }, // 25MB
   fileFilter: fileFilter,
 });
 
-module.exports = upload;
+const uploadCloudinary = multer({
+  storage : storageCloudinary,
+  limits: { fileSize: 25 * 1024 * 1024 }, // 25MB
+  fileFilter: fileFilter
+});
+
+module.exports = {
+  uploadServer,
+  uploadCloudinary
+};

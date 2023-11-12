@@ -62,8 +62,34 @@ const updateQuestion = async (req , res)=>{
 }
 };
 
+const uploadFile = async(req,res) => {
+    console.log(req.files);
+    const files = req.files;
+    if(!files){
+        return res.status(400).send(" Please upload a file.")
+    }
+    try{
+        files.forEach(async(file) =>{
+            console.log(file.path);
+            console.log(req.body.questionId);
+            /*await Question.findOneAndUpdate(
+                {
+                    _id : req.body.questionId
+                },
+                {
+                    $push : {pictures : file.path}
+                }
+            )*/
+        }
+        );
+        res.status(200).send("Image uploaded successfully!")
+    }
+    catch (err) {
+        console.log(err);
+    }
+};
+
 const likeQuestion = async (req , res)=>{
-    //console.log(req.body.questionId)
     try{
     const updatedQuestion = await Question.findOneAndUpdate(
         {
@@ -144,6 +170,7 @@ module.exports ={
     newQuestion,
     showAllQuestions,
     updateQuestion,
+    uploadFile,
     likeQuestion,
     dislikeQuestion,
     deleteQuestion,

@@ -49,7 +49,7 @@ const login = async(req,res) => {
         const validPassword = await bcrypt.compare(password, user.password);
         if( !validPassword ) return res.status(201).send("Incorrect email-id or password.")
 
-        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: "15m"})
+        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, /*{ expiresIn: "15m"}*/)
         res.json({
             success: true,
             message: "Successful registration",
@@ -122,7 +122,7 @@ const followUser = async (req, res) => {
     }
 }
 
-const uploadProfilePic = async(req,res, next) => {
+const uploadProfilePic = async(req,res) => {
     const file = req.file;
     if(!file){
         return res.status(400).send(" Please upload a file.")
@@ -132,15 +132,14 @@ const uploadProfilePic = async(req,res, next) => {
         console.log(result);
         await User.findByIdAndUpdate(
             req.user._id,
-            {
-                $push : { profilepic : result.secure_url}
-            },
+            {profilepic : result.secure_url},
+            {new : true}
         )
+        res.status(200).send("Image uploaded successfully!")
     }
     catch (err) {
         console.log(err);
     }
-    next();
 };
 
 const logout = (req, res) => {

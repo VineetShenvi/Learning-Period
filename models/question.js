@@ -10,6 +10,11 @@ const schema = new mongoose.Schema({
         type : String, 
         required : true
     },
+
+    pictures : [{
+        type : String,
+        required : true
+    }],
     
     category :  {
         type : String,
