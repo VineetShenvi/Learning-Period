@@ -33,7 +33,7 @@ app.use(answerRouter)
 
 start();
 
-
+module.exports = app;
 
 
 

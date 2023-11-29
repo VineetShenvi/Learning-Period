@@ -30,7 +30,7 @@ const signup = async (req,res)=>{
             mobile : mobileno,
         });
         const user1=await user.save()
-        res.send("Successful sign-up!")
+        res.status(200).send(user1)
     }
     catch(error){
         res.status(500).send(error)

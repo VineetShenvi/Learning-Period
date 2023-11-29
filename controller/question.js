@@ -72,20 +72,21 @@ const uploadFile = async(req,res) => {
         files.forEach(async(file) =>{
             console.log(file.path);
             console.log(req.body.questionId);
-            /*await Question.findOneAndUpdate(
+            await Question.findOneAndUpdate(
                 {
                     _id : req.body.questionId
                 },
                 {
                     $push : {pictures : file.path}
                 }
-            )*/
+            )
         }
         );
         res.status(200).send("Image uploaded successfully!")
     }
     catch (err) {
-        console.log(err);
+        res.status(500).json(err.message)
+        console.log(err.message);
     }
 };
 
