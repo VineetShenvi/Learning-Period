@@ -165,6 +165,8 @@ const filterByCategory = async(req, res) => {
     filteredQuestions.forEach((question) => {
         console.log(question.question);
     });
+
+    res.status(200);
 }
 
 module.exports ={

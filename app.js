@@ -6,9 +6,11 @@ config({
 })
 const morgan = require("morgan");
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(cors());
 
 const start = async () => {
     try {

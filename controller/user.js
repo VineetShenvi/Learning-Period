@@ -59,7 +59,7 @@ const login = async(req,res) => {
         sendMail();
     }
     catch(error){
-        res.status(500).send(error)
+        res.status(500).send(error.message)
     }
 }
 
