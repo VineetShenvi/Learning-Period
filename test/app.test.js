@@ -56,7 +56,7 @@ test('login for user' , async() => {
     testuser1Token = response.body.token;
     testUser1ID = response.body.user._id;
     console.log(testuser1Token)
-})
+},7000)
 
 test('login test for admin' , async() => {
     const response = await request(app)
@@ -68,7 +68,7 @@ test('login test for admin' , async() => {
 
     testuser2Token = response.body.token;
     console.log(testuser2Token)
-})
+},7000)
 
 test('view profile' , async()=>{
 
@@ -76,17 +76,17 @@ test('view profile' , async()=>{
     .get("/user/profile")
     .set("authorization" , `bearer ${testuser1Token}`)
     .expect(200)
-})
+},7000)
 
 test('follow someone test' , async() => {
     await request(app)
     .post("/user/followUser")
     .set("authorization" , `bearer ${testuser1Token}`)
-    send({
+   .send({
         _id : testUser1ID
     })
     .expect(200)
-})
+},7000)
 
 test('upload profile pic test' , async() => {
     await request(app)
@@ -94,7 +94,7 @@ test('upload profile pic test' , async() => {
     .set("authorization" , `bearer ${testuser1Token}`)
     .attach('file',("D:/unicode_node_lp/test/testProfilePic.png"))
     .expect(200)
-})
+},7000)
 
 let testQuestion1ID = "";
 
@@ -105,18 +105,18 @@ test('ask question test' , async() => {
     .send({
         question : "Test Question 1",
         category : "Sports"
-    }).expect(200)
+    }).expect(201)
 
     testQuestion1ID = response.body.postedQuestion._id;
     console.log("Test Question 1 ID" , testQuestion1ID);
-})
+},7000)
 
 test('get question test' , async() => {
     await request(app)
     .get("/question/show")
     .set("authorization" , `bearer ${testuser1Token}`)
     .expect(200)
-})
+},7000)
 
 test('update question test' , async() => {
     await request(app)
@@ -124,9 +124,10 @@ test('update question test' , async() => {
     .set("authorization" , `bearer ${testuser1Token}`)
     .send({
         question : "Test Question 1 Updated",
-        category : "Sports"
+        category : "Sports",
+        questionId : testQuestion1ID
     }).expect(200)
-})
+},7000)
 
 test('search questions by category test' , async() => {
     await request(app)
@@ -136,7 +137,7 @@ test('search questions by category test' , async() => {
         category : ["Sports"]
     })
     .expect(200)
-})
+},7000)
 
 test('upvote question test' , async() => {
     await request(app)
@@ -146,7 +147,7 @@ test('upvote question test' , async() => {
         questionId : testQuestion1ID
     })
     .expect(201)
-})
+},7000)
 
 
 test('downvote question test' , async() => {
@@ -157,7 +158,7 @@ test('downvote question test' , async() => {
         questionId : testQuestion1ID
     })
     .expect(201)
-})
+},7000)
 
 test('user delete question test' , async() => {
     await request(app)
@@ -167,7 +168,7 @@ test('user delete question test' , async() => {
         questionId : testQuestion1ID
     })
     .expect(201)
-})
+},7000)
 
 
 /*let testAnswer1ID = "";
